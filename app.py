@@ -2,8 +2,7 @@ from types import MethodDescriptorType
 from flask import Flask, render_template, request, send_file
 import pandas as pd
 import numpy as np
-import csv
-import os
+
 from sklearn.ensemble import RandomForestRegressor 
 import pickle
 

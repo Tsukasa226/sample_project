@@ -38,20 +38,20 @@ def reading_csv(filename):
     for colum_name in strdata_list:
         data = data.drop([colum_name] , axis=1)
 
-    test_x_worknum = data['お仕事No.']
-    data = data.drop(['お仕事No.'], axis=1)
+    test_x_worknum = data['○○']
+    data = data.drop(['○○'], axis=1)
     data = data.fillna(0)
 
     rfr = model_create(strdata_list)
 
     out_y = rfr.predict(data)
-    out_y = pd.DataFrame(out_y, columns=['応募数 合計'])
+    out_y = pd.DataFrame(out_y, columns=['○○'])
 
     OUT_data = pd.concat([test_x_worknum, out_y], axis=1)
     OUT_data.to_csv('files/submit_datas.csv', index=False, encoding='utf_8_sig')
 
 def str_list():
-    df = pd.read_csv('train_x.csv')
+    df = pd.read_csv('○○.csv')
 
     strdata_list = []
     for column in df.columns:
@@ -65,26 +65,26 @@ def str_list():
 
 def data_all(strdata_list):
     
-    df = pd.read_csv('train_x.csv')
+    df = pd.read_csv('○○.csv')
 
     for data in strdata_list:
         df = df.drop([data] , axis=1)
 
-    df = df.fillna(0)#0で補完
+    df = df.fillna(0)
     df= df.drop_duplicates()
 
     train_y = pd.read_csv('train_y.csv')
     train_y = train_y.drop_duplicates()
 
-    train_y_indexs = train_y["お仕事No."].drop_duplicates()
+    train_y_indexs = train_y["○○"].drop_duplicates()
     applys = []
     for index in train_y_indexs:
-        apply = train_y[train_y['お仕事No.']==index].sum()
+        apply = train_y[train_y['○○']==index].sum()
         applys.append(apply)
 
     applys = pd.DataFrame(applys)
 
-    df_all = pd.merge(df, applys, on='お仕事No.', how='inner')
+    df_all = pd.merge(df, applys, on='○○', how='inner')
 
     return df_all
 
@@ -93,8 +93,8 @@ def model_create(strdata_list):
 
     df_all = data_all(strdata_list)
 
-    X = np.array(df_all.drop(['お仕事No.', '応募数 合計'], axis=1))
-    y = np.array(df_all['応募数 合計'])
+    X = np.array(df_all.drop(['○○', '○○'], axis=1))
+    y = np.array(df_all['○○'])
 
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 

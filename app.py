@@ -9,13 +9,11 @@ import pickle
 
 app = Flask(__name__)
 
-# フォーム表示
 @app.route('/', methods=['GET'])
 def index():
     return render_template("home.html")
     
 
-# アップロード機能
 @app.route('/upload', methods=['POST'])
 def upload():
     try:
@@ -24,7 +22,7 @@ def upload():
         fs = request.files['file']
         
         fs.save(fs.filename)
-        # アップしたファイルをインサートする
+        
         reading_csv(fs.filename)
 
         return render_template("uploaded.html")
@@ -43,7 +41,7 @@ def reading_csv(filename):
 
     test_x_worknum = data['お仕事No.']
     data = data.drop(['お仕事No.'], axis=1)
-    data = data.fillna(0)#0で補完
+    data = data.fillna(0)
 
     rfr = model_create(strdata_list)
 
@@ -102,7 +100,7 @@ def model_create(strdata_list):
     # X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=0)
 
     rfr = RandomForestRegressor(random_state=0)
-    #推論
+    
     rfr.fit(X, y)
     # y_pred = rfr.predict(X_test)
 
